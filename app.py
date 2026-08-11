@@ -52,21 +52,21 @@ if 'visitor_counted' not in st.session_state:
 
 # --- 2. DONNÉES EXPERTES COMPLÈTES (15 PAYS CEDEAO) ---
 cedeao_full_data = {
-    "Togo": {"Indicateurs": {"Inflation": "2.7%", "PIB": "5.6%", "Solde Budg.": "-3.8%", "Change": "Stable"}, "Analyse": "La dynamique inflationniste est maîtrisée grâce à une politique monétaire prudente de la BCEAO et un approvisionnement régulier des marchés locaux. Toutefois, la vigilance s'impose sur le solde budgétaire, fortement impacté par les investissements infrastructurels, afin de préserver la viabilité de la dette à moyen terme.", "Points": [3.2, 3.0, 2.8, 2.5, 2.7, 2.6, 2.4]},
-    "Côte d'Ivoire": {"Indicateurs": {"Inflation": "3.1%", "PIB": "6.8%", "Solde Budg.": "-4.2%", "Change": "Stable"}, "Analyse": "L'économie ivoirienne affiche une résilience remarquable portée par le dynamisme de la filière agro-industrielle et des investissements publics. La maîtrise des prix alimentaires doit rester la priorité pour maintenir le pouvoir d'achat urbain.", "Points": [3.5, 3.3, 3.2, 3.0, 3.1, 3.2, 3.3]},
-    "Sénégal": {"Indicateurs": {"Inflation": "2.9%", "PIB": "7.2%", "Solde Budg.": "-5.1%", "Change": "Stable"}, "Analyse": "L'entrée en production imminente des hydrocarbures redessine les perspectives macroéconomiques. Il est recommandé d'accompagner cette transition par une stricte discipline budgétaire pour éviter les risques de surchauffe.", "Points": [3.0, 2.9, 2.8, 2.8, 2.9, 2.9, 2.8]},
-    "Bénin": {"Indicateurs": {"Inflation": "2.8%", "PIB": "6.3%", "Solde Budg.": "-4.0%", "Change": "Stable"}, "Analyse": "Les performances du port de Cotonou et les réformes logistiques soutiennent l'activité. La consolidation budgétaire progresse conformément aux critères de convergence de l'UEMOA.", "Points": [3.1, 3.0, 2.9, 2.7, 2.8, 2.7, 2.6]},
-    "Burkina Faso": {"Indicateurs": {"Inflation": "3.4%", "PIB": "5.1%", "Solde Budg.": "-5.5%", "Change": "Stable"}, "Analyse": "Malgré les défis sécuritaires, l'économie fait preuve d'une forte résilience, soutenue par le secteur aurifère. Une attention particulière doit être portée à la gestion des tensions sur les prix de première nécessité.", "Points": [3.8, 3.6, 3.5, 3.2, 3.4, 3.5, 3.3]},
-    "Mali": {"Indicateurs": {"Inflation": "3.2%", "PIB": "4.8%", "Solde Budg.": "-4.7%", "Change": "Stable"}, "Analyse": "L'activité économique reste contrainte par les chocs exogènes et énergétiques. La diversification des sources d'approvisionnement et le soutien à la production agricole locale sont des impératifs stratégiques.", "Points": [3.4, 3.3, 3.1, 3.0, 3.2, 3.1, 3.0]},
-    "Niger": {"Indicateurs": {"Inflation": "3.5%", "PIB": "6.5%", "Solde Budg.": "-4.8%", "Change": "Stable"}, "Analyse": "Le secteur extractif (pétrole) constitue le principal moteur de la croissance à court terme. Les politiques publiques doivent cibler l'optimisation des recettes intérieures pour financer le développement social.", "Points": [3.0, 3.1, 3.2, 3.3, 3.5, 3.6, 3.4]},
-    "Guinée-Bissau": {"Indicateurs": {"Inflation": "4.0%", "PIB": "4.5%", "Solde Budg.": "-4.5%", "Change": "Stable"}, "Analyse": "La campagne de commercialisation de l'anacarde conditionne l'équilibre macroéconomique global. Des réformes structurelles dans la gouvernance financière sont indispensables pour stabiliser le cadre budgétaire.", "Points": [4.5, 4.3, 4.1, 3.9, 4.0, 3.8, 3.7]},
-    "Ghana": {"Indicateurs": {"Inflation": "18.5%", "PIB": "4.2%", "Solde Budg.": "-6.5%", "Change": "Dépréciation"}, "Analyse": "Une pression inflationniste persistante nécessite des ajustements structurels rigoureux. La priorité absolue doit être accordée à la stricte consolidation budgétaire et au resserrement prudentiel pour stabiliser la monnaie nationale et ancrer les anticipations.", "Points": [22.0, 20.5, 19.8, 19.0, 18.5, 17.8, 17.0]},
-    "Nigeria": {"Indicateurs": {"Inflation": "22.4%", "PIB": "3.3%", "Solde Budg.": "-4.6%", "Change": "Volatile"}, "Analyse": "Les réformes audacieuses sur les subventions et le marché des changes créent des tensions inflationnistes transitoires mais assainissent les fondamentaux à long terme. Le suivi de la pauvreté et la protection des populations vulnérables s'avèrent critiques.", "Points": [21.0, 21.5, 21.8, 22.0, 22.4, 22.8, 23.0]},
-    "Guinée": {"Indicateurs": {"Inflation": "5.2%", "PIB": "5.5%", "Solde Budg.": "-2.1%", "Change": "Stable"}, "Analyse": "Portée par les megas-projets de bauxite et de fer, l'économie maintient un rythme satisfaisant. Le défi réside dans l'intégration locale de la chaîne de valeur minière pour maximiser les retombées socio-économiques.", "Points": [5.5, 5.4, 5.3, 5.2, 5.2, 5.1, 5.0]},
-    "Sierra Leone": {"Indicateurs": {"Inflation": "25.1%", "PIB": "3.8%", "Solde Budg.": "-5.2%", "Change": "Dépréciation"}, "Analyse": "L'inflation élevée pèse lourdement sur le pouvoir d'achat. Une coordination étroite entre la banque centrale et le ministère des finances est requise pour juguler la monétisation du déficit budgétaire.", "Points": [28.0, 27.0, 26.5, 25.8, 25.1, 24.5, 24.0]},
-    "Libéria": {"Indicateurs": {"Inflation": "7.3%", "PIB": "4.7%", "Solde Budg.": "-3.9%", "Change": "Stable"}, "Analyse": "L'amélioration de la gouvernance macroéconomique et l'apurement des arriérés intérieurs soutiennent la reprise. Des efforts accrus sont nécessaires pour renforcer l'infrastructure de base et diversifier les sources de croissance.", "Points": [6.8, 7.0, 7.1, 7.2, 7.3, 7.5, 7.4]},
-    "Gambie": {"Indicateurs": {"Inflation": "6.0%", "PIB": "5.2%", "Solde Budg.": "-4.3%", "Change": "Stable"}, "Analyse": "Le tourisme et les transferts de fonds de la diaspora continuent de soutenir l'activité. La viabilité de la dette publique reste un point de vigilance qui nécessite une rationalisation continue des dépenses courantes.", "Points": [6.5, 6.3, 6.2, 6.1, 6.0, 5.9, 5.8]},
-    "Cap-Vert": {"Indicateurs": {"Inflation": "2.2%", "PIB": "4.8%", "Solde Budg.": "-3.2%", "Change": "Fixe (Euro)"}, "Analyse": "La forte reprise du secteur touristique tire l'économie insulaire vers le haut. L'arrimage de l'escudo à l'euro garantit une stabilité des prix remarquable, bien que la vulnérabilité aux chocs extérieurs demeure élevée.", "Points": [2.5, 2.4, 2.3, 2.2, 2.2, 2.1, 2.0]}
+    "Togo": {"Indicateurs": {"Inflation": 2.7, "PIB": "5.6%", "Solde Budg.": "-3.8%", "Change": "Stable"}, "Analyse": "La dynamique inflationniste est maîtrisée grâce à une politique monétaire prudente de la BCEAO et un approvisionnement régulier des marchés locaux. Toutefois, la vigilance s'impose sur le solde budgétaire, fortement impacté par les investissements infrastructurels, afin de préserver la viabilité de la dette à moyen terme.", "Points": [3.2, 3.0, 2.8, 2.5, 2.7, 2.6, 2.4]},
+    "Côte d'Ivoire": {"Indicateurs": {"Inflation": 3.1, "PIB": "6.8%", "Solde Budg.": "-4.2%", "Change": "Stable"}, "Analyse": "L'économie ivoirienne affiche une résilience remarquable portée par le dynamisme de la filière agro-industrielle et des investissements publics. La maîtrise des prix alimentaires doit rester la priorité pour maintenir le pouvoir d'achat urbain.", "Points": [3.5, 3.3, 3.2, 3.0, 3.1, 3.2, 3.3]},
+    "Sénégal": {"Indicateurs": {"Inflation": 2.9, "PIB": "7.2%", "Solde Budg.": "-5.1%", "Change": "Stable"}, "Analyse": "L'entrée en production imminente des hydrocarbures redessine les perspectives macroéconomiques. Il est recommandé d'accompagner cette transition par une stricte discipline budgétaire pour éviter les risques de surchauffe.", "Points": [3.0, 2.9, 2.8, 2.8, 2.9, 2.9, 2.8]},
+    "Bénin": {"Indicateurs": {"Inflation": 2.8, "PIB": "6.3%", "Solde Budg.": "-4.0%", "Change": "Stable"}, "Analyse": "Les performances du port de Cotonou et les réformes logistiques soutiennent l'activité. La consolidation budgétaire progresse conformément aux critères de convergence de l'UEMOA.", "Points": [3.1, 3.0, 2.9, 2.7, 2.8, 2.7, 2.6]},
+    "Burkina Faso": {"Indicateurs": {"Inflation": 3.4, "PIB": "5.1%", "Solde Budg.": "-5.5%", "Change": "Stable"}, "Analyse": "Malgré les défis sécuritaires, l'économie fait preuve d'une forte résilience, soutenue par le secteur aurifère. Une attention particulière doit être portée à la gestion des tensions sur les prix de première nécessité.", "Points": [3.8, 3.6, 3.5, 3.2, 3.4, 3.5, 3.3]},
+    "Mali": {"Indicateurs": {"Inflation": 3.2, "PIB": "4.8%", "Solde Budg.": "-4.7%", "Change": "Stable"}, "Analyse": "L'activité économique reste contrainte par les chocs exogènes et énergétiques. La diversification des sources d'approvisionnement et le soutien à la production agricole locale sont des impératifs stratégiques.", "Points": [3.4, 3.3, 3.1, 3.0, 3.2, 3.1, 3.0]},
+    "Niger": {"Indicateurs": {"Inflation": 3.5, "PIB": "6.5%", "Solde Budg.": "-4.8%", "Change": "Stable"}, "Analyse": "Le secteur extractif (pétrole) constitue le principal moteur de la croissance à court terme. Les politiques publiques doivent cibler l'optimisation des recettes intérieures pour financer le développement social.", "Points": [3.0, 3.1, 3.2, 3.3, 3.5, 3.6, 3.4]},
+    "Guinée-Bissau": {"Indicateurs": {"Inflation": 4.0, "PIB": "4.5%", "Solde Budg.": "-4.5%", "Change": "Stable"}, "Analyse": "La campagne de commercialisation de l'anacarde conditionne l'équilibre macroéconomique global. Des réformes structurelles dans la gouvernance financière sont indispensables pour stabiliser le cadre budgétaire.", "Points": [4.5, 4.3, 4.1, 3.9, 4.0, 3.8, 3.7]},
+    "Ghana": {"Indicateurs": {"Inflation": 18.5, "PIB": "4.2%", "Solde Budg.": "-6.5%", "Change": "Dépréciation"}, "Analyse": "Une pression inflationniste persistante nécessite des ajustements structurels rigoureux. La priorité absolue doit être accordée à la stricte consolidation budgétaire et au resserrement prudentiel pour stabiliser la monnaie nationale et ancrer les anticipations.", "Points": [22.0, 20.5, 19.8, 19.0, 18.5, 17.8, 17.0]},
+    "Nigeria": {"Indicateurs": {"Inflation": 22.4, "PIB": "3.3%", "Solde Budg.": "-4.6%", "Change": "Volatile"}, "Analyse": "Les réformes audacieuses sur les subventions et le marché des changes créent des tensions inflationnistes transitoires mais assainissent les fondamentaux à long terme. Le suivi de la pauvreté et la protection des populations vulnérables s'avèrent critiques.", "Points": [21.0, 21.5, 21.8, 22.0, 22.4, 22.8, 23.0]},
+    "Guinée": {"Indicateurs": {"Inflation": 5.2, "PIB": "5.5%", "Solde Budg.": "-2.1%", "Change": "Stable"}, "Analyse": "Portée par les megas-projets de bauxite et de fer, l'économie maintient un rythme satisfaisant. Le défi réside dans l'intégration locale de la chaîne de valeur minière pour maximiser les retombées socio-économiques.", "Points": [5.5, 5.4, 5.3, 5.2, 5.2, 5.1, 5.0]},
+    "Sierra Leone": {"Indicateurs": {"Inflation": 25.1, "PIB": "3.8%", "Solde Budg.": "-5.2%", "Change": "Dépréciation"}, "Analyse": "L'inflation élevée pèse lourdement sur le pouvoir d'achat. Une coordination étroite entre la banque centrale et le ministère des finances est requise pour juguler la monétisation du déficit budgétaire.", "Points": [28.0, 27.0, 26.5, 25.8, 25.1, 24.5, 24.0]},
+    "Libéria": {"Indicateurs": {"Inflation": 7.3, "PIB": "4.7%", "Solde Budg.": "-3.9%", "Change": "Stable"}, "Analyse": "L'amélioration de la gouvernance macroéconomique et l'apurement des arriérés intérieurs soutiennent la reprise. Des efforts accrus sont nécessaires pour renforcer l'infrastructure de base et diversifier les sources de croissance.", "Points": [6.8, 7.0, 7.1, 7.2, 7.3, 7.5, 7.4]},
+    "Gambie": {"Indicateurs": {"Inflation": 6.0, "PIB": "5.2%", "Solde Budg.": "-4.3%", "Change": "Stable"}, "Analyse": "Le tourisme et les transferts de fonds de la diaspora continuent de soutenir l'activité. La viabilité de la dette publique reste un point de vigilance qui nécessite une rationalisation continue des dépenses courantes.", "Points": [6.5, 6.3, 6.2, 6.1, 6.0, 5.9, 5.8]},
+    "Cap-Vert": {"Indicateurs": {"Inflation": 2.2, "PIB": "4.8%", "Solde Budg.": "-3.2%", "Change": "Fixe (Euro)"}, "Analyse": "La forte reprise du secteur touristique tire l'économie insulaire vers le haut. L'arrimage de l'escudo à l'euro garantit une stabilité des prix remarquable, bien que la vulnérabilité aux chocs extérieurs demeure élevée.", "Points": [2.5, 2.4, 2.3, 2.2, 2.2, 2.1, 2.0]}
 }
 
 # --- 3. BARRE DE NAVIGATION SUPÉRIEURE (SaaS Pro Tabs) ---
@@ -82,7 +82,6 @@ st.markdown("""
     </div>
 """, unsafe_allow_html=True)
 
-# Extension des onglets avec Formations et Partenariats
 tab_dashboard, tab_pro, tab_daas, tab_formations, tab_work, tab_conseil = st.tabs([
     "📊 Tableau de Bord", 
     "💼 Abonnements Pro", 
@@ -92,16 +91,42 @@ tab_dashboard, tab_pro, tab_daas, tab_formations, tab_work, tab_conseil = st.tab
     "🎯 Conseil Stratégique"
 ])
 
-# --- ONGLET 1 : TABLEAU DE BORD ---
+# --- ONGLET 1 : TABLEAU DE BORD (AVEC AJOUTS PERCUTANTS) ---
 with tab_dashboard:
+    # 1. Fil d'actualité Live (Live Intelligence Feed)
+    st.markdown("""
+        <div style="background-color: #EFF6FF; border-left: 4px solid #1D4ED8; padding: 10px 15px; border-radius: 4px; margin-bottom: 20px;">
+            <span style="font-weight: bold; color: #1E40AF; font-size: 13px;">🔴 LIVE INTELLIGENCE FEED :</span> 
+            <span style="font-size: 13px; color: #1E293B;"> Publication de la note de prospective sur l'impact des corridors de libre-échange &bull; Point conjoncturel BCEAO mis à jour.</span>
+        </div>
+    """, unsafe_allow_html=True)
+
     st.markdown("### 🌐 Sélection du Territoire Économique")
     pays = st.selectbox("Choisissez un pays membre de la CEDEAO :", list(cedeao_full_data.keys()), key="pays_select")
     
     st.markdown("---")
     st.markdown(f"## 📊 Analyse Macroéconomique : **{pays}**")
     
+    base_infl = cedeao_full_data[pays]["Indicateurs"]["Inflation"]
+    
+    # 2. Module de Simulateur de Chocs (Stress Test Interactif)
+    with st.expander("⚡ Simulateur de Stress Test & Chocs Macroéconomiques (Nouveau)", expanded=False):
+        st.markdown("Simulez l'impact instantané de chocs exogènes sur l'inflation du pays sélectionné :")
+        col_s1, col_s2, col_s3 = st.columns(3)
+        with col_s1:
+            choc_petrole = st.slider("Choc Pétrolier (%)", -30, 30, 0, 5)
+        with col_s2:
+            choc_change = st.slider("Dépréciation Monétaire (%)", 0, 25, 0, 5)
+        with col_s3:
+            choc_taux = st.slider("Variation Taux Directeur (pts)", -2.0, 2.0, 0.0, 0.5)
+        
+        # Calcul de l'inflation simulée par modélisation simplifiée
+        delta_infl = (choc_petrole * 0.05) + (choc_change * 0.15) - (choc_taux * 0.3)
+        simulated_infl = round(base_infl + delta_infl, 1)
+        st.info(f"📊 **Résultat de la simulation de choc :** L'inflation projetée passe de **{base_infl}%** à **{simulated_infl}%** sous l'effet cumulé des paramètres choisis.")
+
     c1, c2, c3, c4 = st.columns(4)
-    c1.metric("Inflation Actuelle", cedeao_full_data[pays]["Indicateurs"]["Inflation"])
+    c1.metric("Inflation Actuelle", f"{base_infl}%", delta=f"{round(simulated_infl - base_infl, 1)}% (Simul.)" if (simulated_infl != base_infl) else None)
     c2.metric("Croissance PIB", cedeao_full_data[pays]["Indicateurs"]["PIB"])
     c3.metric("Solde Budgétaire", cedeao_full_data[pays]["Indicateurs"]["Solde Budg."])
     c4.metric("Tendance Change", cedeao_full_data[pays]["Indicateurs"]["Change"])
@@ -137,6 +162,28 @@ with tab_dashboard:
     </script>
     """
     st.components.v1.html(chart_html, height=350)
+
+    # 3. Comparateur Multi-Pays Instantané (Benchmarking côte à côte)
+    st.divider()
+    st.subheader("⚖️ Comparateur Multi-Pays (Benchmarking Régional)")
+    st.markdown("Sélectionnez plusieurs pays pour comparer instantanément leurs indicateurs macroéconomiques :")
+    
+    selected_bench_pays = st.multiselect(
+        "Pays à comparer :", 
+        list(cedeao_full_data.keys()), 
+        default=["Togo", "Côte d'Ivoire", "Ghana", "Nigeria"]
+    )
+    
+    if selected_bench_pays:
+        bench_data = []
+        for p in selected_bench_pays:
+            bench_data.append({
+                "Pays": p,
+                "Inflation (%)": cedeao_full_data[p]["Indicateurs"]["Inflation"],
+                "Croissance PIB": cedeao_full_data[p]["Indicateurs"]["PIB"],
+                "Solde Budgétaire": cedeao_full_data[p]["Indicateurs"]["Solde Budg."]
+            })
+        st.dataframe(bench_data, use_container_width=True)
 
 # --- ONGLET 2 : ABONNEMENTS PRO ---
 with tab_pro:
@@ -185,10 +232,10 @@ with tab_daas:
         if st.button("Commander la Base de Données"):
             st.info("Envoyez un mail à impactlabtogo@gmail.com pour l'acquisition des tables de données.")
 
-# --- ONGLET 4 : FORMATIONS EN LIGNE & PRÉSENTIEL ---
+# --- ONGLET 4 : FORMATIONS ---
 with tab_formations:
     st.title("🎓 Catalogue des Formations (En ligne & Présentiel)")
-    st.markdown("Du renforcement de compétences pour étudiants jusqu'aux certifications méthodologiques avancées pour professionnels, experts et chercheurs. Couvrant toute la chaîne de valeur quantitative.")
+    st.markdown("Du renforcement de compétences pour étudiants jusqu'aux certifications méthodologiques avancées pour professionnels, experts et chercheurs.")
     st.markdown("💬 **Inscriptions & Formations sur-mesure pour institutions :** `impactlabtogo@gmail.com`")
     st.divider()
 
