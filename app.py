@@ -9,13 +9,20 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# --- MASQUAGE DES ÉLÉMENTS STREAMLIT (SaaS Look & Feel) ---
+# --- MASQUAGE TOTAL DES ÉLÉMENTS STREAMLIT (SaaS Look & Feel Top 1) ---
 hide_streamlit_style = """
     <style>
     #MainMenu {visibility: hidden;}
     footer {visibility: hidden;}
     header {visibility: hidden;}
     .stAppToolbar {visibility: hidden;}
+    div[data-testid="stDecoration"] {visibility: hidden;}
+    div.viewerBadge_container__1QSob {display: none !important;}
+    .viewerBadge_link__1S1_7 {display: none !important;}
+    button[kind="header"] {visibility: hidden;}
+    #manage-app-button {display: none !important;}
+    .stAppDeployButton {display: none !important;}
+    iframe[title="streamlit_badge"] {display: none !important;}
     </style>
 """
 st.markdown(hide_streamlit_style, unsafe_allow_html=True)
@@ -62,57 +69,149 @@ cedeao_full_data = {
     "Cap-Vert": {"Indicateurs": {"Inflation": "2.2%", "PIB": "4.8%", "Solde Budg.": "-3.2%", "Change": "Fixe (Euro)"}, "Analyse": "La forte reprise du secteur touristique tire l'économie insulaire vers le haut. L'arrimage de l'escudo à l'euro garantit une stabilité des prix remarquable, bien que la vulnérabilité aux chocs extérieurs demeure élevée.", "Points": [2.5, 2.4, 2.3, 2.2, 2.2, 2.1, 2.0]}
 }
 
-# --- 3. FONCTIONS D'AFFICHAGE ---
-def run_main_dashboard():
-    pays = st.sidebar.selectbox("Sélectionnez un pays :", list(cedeao_full_data.keys()))
-    st.markdown(f'<div style="background-color: #EFF6FF; color: #1D4ED8; padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: 600; margin-bottom: 20px; border: 1px solid #BFDBFE; display: inline-block;">🚀 AfriDataMetrics &bull; Intelligence Économique par Impact Lab TOGO</div>', unsafe_allow_html=True)
-    st.title(f"📊 Analyse : {pays}")
+# --- 3. BARRE DE NAVIGATION SUPÉRIEURE (SaaS Pro Tabs) ---
+st.markdown("""
+    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #E5E7EB; padding-bottom: 10px; margin-bottom: 20px;">
+        <div>
+            <span style="font-size: 20px; font-weight: bold; color: #1D4ED8;">🌍 AfriDataMetrics</span>
+            <span style="font-size: 12px; color: #6B7280; margin-left: 10px;">Impact Lab TOGO &bull; Intelligence Économique CEDEAO</span>
+        </div>
+    </div>
+""", unsafe_allow_html=True)
+
+# Utilisation d'onglets horizontaux professionnels
+tab_dashboard, tab_pro, tab_daas, tab_conseil = st.tabs([
+    "📊 Tableau de Bord (15 Pays)", 
+    "💼 Abonnements Pro (SaaS)", 
+    "📈 Data & Rapports (DaaS)", 
+    "🎯 Conseil Stratégique"
+])
+
+# --- ONGLOT 1 : TABLEAU DE BORD ---
+with tab_dashboard:
+    st.markdown("### 🌐 Sélection du Territoire Économique")
+    # Sélecteur de pays bien visible au centre ou en haut de la page
+    pays = st.selectbox("Choisissez un pays membre de la CEDEAO :", list(cedeao_full_data.keys()), key="pays_select")
+    
+    st.markdown("---")
+    st.markdown(f"## 📊 Analyse Macroéconomique : **{pays}**")
     
     c1, c2, c3, c4 = st.columns(4)
-    c1.metric("Inflation", cedeao_full_data[pays]["Indicateurs"]["Inflation"])
+    c1.metric("Inflation Actuelle", cedeao_full_data[pays]["Indicateurs"]["Inflation"])
     c2.metric("Croissance PIB", cedeao_full_data[pays]["Indicateurs"]["PIB"])
-    c3.metric("Solde Budg.", cedeao_full_data[pays]["Indicateurs"]["Solde Budg."])
-    c4.metric("Change", cedeao_full_data[pays]["Indicateurs"]["Change"])
+    c3.metric("Solde Budgétaire", cedeao_full_data[pays]["Indicateurs"]["Solde Budg."])
+    c4.metric("Tendance Change", cedeao_full_data[pays]["Indicateurs"]["Change"])
+    
     st.divider()
-    st.subheader("💡 Analyse & Recommandations")
+    st.subheader("💡 Analyse & Recommandations Stratégiques")
     st.info(cedeao_full_data[pays]["Analyse"])
     
+    st.subheader("📉 Modélisation Prédictive & Trajectoire des Prix")
     points = cedeao_full_data[pays]["Points"]
     chart_html = f"""
     <div style="background-color: #ffffff; padding: 15px; border-radius: 10px; border: 1px solid #E5E7EB;">
-        <canvas id="macroChart" width="400" height="130"></canvas>
+        <canvas id="macroChart" width="400" height="120"></canvas>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
     new Chart(document.getElementById('macroChart').getContext('2d'), {{
         type: 'line',
-        data: {{ labels: ['25-01', '25-04', '25-07', '25-10', '26-01', '26-04', '26-07'], datasets: [{{ label: 'Inflation %', data: {points}, borderColor: '#1D4ED8', fill: true, tension: 0.3 }}] }},
+        data: {{ 
+            labels: ['2025-Q1', '2025-Q2', '2025-Q3', '2025-Q4', '2026-Q1', '2026-Q2 (Prév.)', '2026-Q3 (Prév.)'], 
+            datasets: [{{ 
+                label: 'Inflation (Glissement annuel %)', 
+                data: {points}, 
+                borderColor: '#1D4ED8', 
+                backgroundColor: 'rgba(29, 78, 216, 0.08)',
+                borderWidth: 3,
+                fill: true, 
+                tension: 0.35 
+            }}] 
+        }},
         options: {{ responsive: true }}
     }});
     </script>
     """
     st.components.v1.html(chart_html, height=350)
 
-# --- 4. NAVIGATION & SIDEBAR ---
+# --- ONGLOT 2 : ABONNEMENTS PRO ---
+with tab_pro:
+    st.title("💼 Offres d'Abonnement Professionnel (SaaS)")
+    st.markdown("Débloquez la puissance complète de nos modèles économétriques et de nos outils de simulation prédictive pour vos équipes.")
+    
+    col1, col2 = st.columns(2)
+    with col1:
+        st.markdown("### 🚀 Offre Standard Pro")
+        st.markdown("**Pour les analystes et chercheurs indépendants**")
+        st.markdown("- Accès complet aux tableaux de bord historiques\n- Modélisation avancée\n- Export des graphiques et données")
+        st.markdown("### **50 000 FCFA / mois**")
+        if st.button("Souscrire à l'Offre Pro"):
+            st.success("Redirection vers le paiement sécurisé... (Contactez impactlabtogo@gmail.com pour finaliser)")
+
+    with col2:
+        st.markdown("### 🏛️ Licence Institutionnelle")
+        st.markdown("**Pour les Banques, Fonds & Cabinets**")
+        st.markdown("- Accès multi-utilisateurs illimité\n- Modélisation avancée (System GMM & DSGE)\n- Accès API dédié et rapports automatisés")
+        st.markdown("### **Sur Devis / Annuel**")
+        if st.button("Demander une Licence Institutionnelle"):
+            save_lead("Demande_Licence_Pro", "Institutionnel", "SaaS B2B")
+            st.success("Demande enregistrée. Notre équipe commerciale vous contactera sous 24h.")
+
+# --- ONGLOT 3 : DATA & RAPPORTS ---
+with tab_daas:
+    st.title("📊 Vente de Données & Rapports (Data-as-a-Service)")
+    st.markdown("Téléchargez des bases de données macroéconomiques nettoyées, structurées et prêtes à l'emploi, ainsi que nos notes d'orientation stratégique sectorielles.")
+    
+    col1, col2 = st.columns(2)
+    with col1:
+        st.markdown("#### 📑 Note d'Orientation : ZLECAf & Corridors")
+        st.markdown("Analyse prospective des mégatendances continentales et des impacts sur les chaînes de valeur.")
+        st.markdown("**Prix : 25 000 FCFA**")
+        if st.button("Commander le Rapport PDF"):
+            st.info("Envoyez un mail à impactlabtogo@gmail.com avec la référence #ZLECAf pour recevoir le lien de téléchargement.")
+            
+    with col2:
+        st.markdown("#### 🗃️ Base de Données Panel CEDEAO (Clean)")
+        st.markdown("Jeu de données Stata/R (1995-2025) prêt pour régressions économétriques.")
+        st.markdown("**Prix : 75 000 FCFA**")
+        if st.button("Commander la Base de Données"):
+            st.info("Envoyez un mail à impactlabtogo@gmail.com pour l'acquisition des tables de données.")
+
+# --- ONGLOT 4 : CONSEIL ---
+with tab_conseil:
+    st.title("🎯 Conseil Stratégique & Études sur Mesure")
+    st.markdown("Vous avez besoin d'une étude d'impact spécifique, d'une modélisation macroéconomique sur-mesure ou d'une analyse de risque pour votre implantation dans la région ?")
+    
+    with st.form("consulting_form"):
+        c_name = st.text_input("Nom de l'organisation / Entreprise")
+        c_email = st.text_input("E-mail de contact")
+        c_project = st.text_area("Décrivez votre besoin ou votre projet d'étude")
+        c_submit = st.form_submit_button("Envoyer la demande de mission")
+        
+        if c_submit:
+            if c_email and c_project:
+                save_lead(c_email, c_name, "Mission Conseil Sur-Mesure")
+                st.success("✅ Votre demande de mission a été transmise à notre équipe d'associés. Nous vous répondrons sous 48h.")
+            else:
+                st.error("Veuillez renseigner au moins l'e-mail et les détails du projet.")
+
+# --- BARRE LATÉRALE DISCRÈTE (Capture de leads & stats internes) ---
 st.sidebar.title("🌍 AfriDataMetrics")
-menu = st.sidebar.radio("Navigation", ["Tableau de Bord", "Abonnements Pro", "Data & Rapports", "Conseil Sur-Mesure"])
+st.sidebar.caption("Impact Lab TOGO")
+st.sidebar.markdown("---")
+st.sidebar.subheader("📬 Veille Stratégique")
 
-with st.sidebar.form("lead_capture"):
-    n, e = st.text_input("Nom"), st.text_input("E-mail Pro")
-    if st.form_submit_button("S'inscrire à la veille"):
-        save_lead(e, n, "Veille")
-        st.success("Enregistré !")
+with st.sidebar.form("lead_capture_form"):
+    visitor_name = st.text_input("Votre Nom")
+    visitor_email = st.text_input("E-mail Pro *")
+    submitted = st.form_submit_button("S'inscrire")
 
-# --- 5. LOGIQUE PAGES ---
-if menu == "Tableau de Bord": run_main_dashboard()
-elif menu == "Abonnements Pro":
-    st.title("💼 Offres Pro (SaaS)")
-    c1, c2 = st.columns(2)
-    with c1: st.markdown("### Standard Pro\n50 000 FCFA/mois")
-    with c2: st.markdown("### Institutionnel\nSur Devis")
-elif menu == "Data & Rapports":
-    st.title("📊 Data-as-a-Service")
-    st.write("Catalogue des bases de données et rapports disponibles.")
-elif menu == "Conseil Sur-Mesure":
-    st.title("🎯 Conseil & Stratégie")
-    if st.form_submit_button("Envoyer"): save_lead("N/A", "N/A", "Conseil")
+    if submitted:
+        if visitor_email and "@" in visitor_email:
+            save_lead(visitor_email, visitor_name if visitor_name else "Anonyme", "Veille Générale")
+            st.sidebar.success("✅ Validé !")
+        else:
+            st.sidebar.error("❌ E-mail invalide.")
+
+st.sidebar.markdown("---")
+st.sidebar.caption(f"📊 Trafic plateforme : **{st.session_state.visitor_count}** visites")
