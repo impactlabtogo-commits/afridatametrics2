@@ -82,10 +82,13 @@ st.markdown("""
     </div>
 """, unsafe_allow_html=True)
 
-tab_dashboard, tab_pro, tab_daas, tab_conseil = st.tabs([
-    "📊 Tableau de Bord (15 Pays)", 
-    "💼 Abonnements Pro (SaaS)", 
-    "📈 Data & Rapports (DaaS)", 
+# Extension des onglets avec Formations et Partenariats
+tab_dashboard, tab_pro, tab_daas, tab_formations, tab_work, tab_conseil = st.tabs([
+    "📊 Tableau de Bord", 
+    "💼 Abonnements Pro", 
+    "📈 Data & Rapports", 
+    "🎓 Formations", 
+    "🤝 Travailler avec nous",
     "🎯 Conseil Stratégique"
 ])
 
@@ -182,7 +185,125 @@ with tab_daas:
         if st.button("Commander la Base de Données"):
             st.info("Envoyez un mail à impactlabtogo@gmail.com pour l'acquisition des tables de données.")
 
-# --- ONGLET 4 : CONSEIL ---
+# --- ONGLET 4 : FORMATIONS EN LIGNE & PRÉSENTIEL ---
+with tab_formations:
+    st.title("🎓 Catalogue des Formations (En ligne & Présentiel)")
+    st.markdown("Du renforcement de compétences pour étudiants jusqu'aux certifications méthodologiques avancées pour professionnels, experts et chercheurs. Couvrant toute la chaîne de valeur quantitative.")
+    st.markdown("💬 **Inscriptions & Formations sur-mesure pour institutions :** `impactlabtogo@gmail.com`")
+    st.divider()
+
+    st.subheader("📌 1. Niveau Junior & Étudiants (Fondations & Outils)")
+    f1, f2 = st.columns(2)
+    with f1:
+        st.markdown("#### 🟢 Maîtrise des Outils de Collecte & Enquêtes de Terrain")
+        st.markdown("- **Cible :** Étudiants, assistants de recherche, enquêteurs.")
+        st.markdown("- **Format :** Hybride (En ligne & Ateliers pratiques Lomé/Kara).")
+        st.markdown("- **Programme :** Conception de masques sur ODK, KoboToolbox, XLSForms, apurement et traitement sous R/Stata.")
+        st.markdown("### **Coût : 35 000 FCFA**")
+    with f2:
+        st.markdown("#### 🟢 Initiation à la Programmation Économétrique (R & Stata)")
+        st.markdown("- **Cible :** Étudiants en Master 1/2, jeunes diplômés en économie/statistique.")
+        st.markdown("- **Format :** En ligne (modules vidéo + tutorat asynchrone).")
+        st.markdown("- **Programme :** Manipulation de dataframes, statistiques descriptives, graphiques avancés (ggplot2).")
+        st.markdown("### **Coût : 45 000 FCFA**")
+
+    st.divider()
+    st.subheader("📌 2. Niveau Intermédiaire & Chercheurs (Modélisation Empirique)")
+    f3, f4 = st.columns(2)
+    with f3:
+        st.markdown("#### 🟡 Économétrie des Données de Panel & Séries Temporelles")
+        st.markdown("- **Cible :** Chercheurs, doctorants, analystes juniors.")
+        st.markdown("- **Format :** Présentiel intensif (Week-end) ou Virtuel en direct.")
+        st.markdown("- **Programme :** Modèles à effets fixés/aléatoires, Panel ARDL, tests de cointégration, corrections d'endogénéité.")
+        st.markdown("### **Coût : 90 000 FCFA**")
+    with f4:
+        st.markdown("#### 🟡 Évaluation d'Impact des Politiques Publiques")
+        st.markdown("- **Cible :** Cadres d'administrations, chargés de projets, ONG, chercheurs.")
+        st.markdown("- **Format :** En ligne & Ateliers pratiques sur cas réels.")
+        st.markdown("- **Programme :** Méthodes Contrefactuelles, Propensity Score Matching (PSM), Difference-in-Differences (DiD).")
+        st.markdown("### **Coût : 110 000 FCFA**")
+
+    st.divider()
+    st.subheader("📌 3. Niveau Avancé & Professionnel (Experts & Hautes Institutions)")
+    f5, f6 = st.columns(2)
+    with f5:
+        st.markdown("#### 🔴 Modélisation Avancée : System GMM & Équations Simultanées")
+        st.markdown("- **Cible :** Économistes seniors, chercheurs affiliés, banquiers centraux.")
+        st.markdown("- **Format :** Présentiel exclusif sur 3 jours (ou Masterclass en ligne).")
+        st.markdown("- **Programme :** Traitement de la dynamique des panels, instruments valides, tests de Sargan/Hansen, GMM en système.")
+        st.markdown("### **Coût : 200 000 FCFA**")
+    with f6:
+        st.markdown("#### 🔴 Modélisation DSGE & Prévision Macroéconomique")
+        st.markdown("- **Cible :** Modélisateurs de banques centrales, ministères des finances, grands cabinets.")
+        st.markdown("- **Format :** Présentiel sur mesure / Bootcamp intensif.")
+        st.markdown("- **Programme :** Équilibre Général Stochastique Statique et Dynamique, étalonnage, simulations de chocs exogènes.")
+        st.markdown("### **Coût : Sur Devis (À partir de 350 000 FCFA)**")
+
+    st.markdown("---")
+    if st.button("📩 S'inscrire à une session de formation"):
+        save_lead("Demande_Formation", "Candidat Formation", "Formations")
+        st.success("Votre intérêt pour nos formations a été enregistré. Écrivez-nous à impactlabtogo@gmail.com pour recevoir la brochure détaillée et les plannings.")
+
+# --- ONGLET 5 : TRAVAILLER AVEC NOUS ---
+with tab_work:
+    st.title("🤝 Travailler avec Nous (Partenariats & Collaborations)")
+    st.markdown("AfriDataMetrics et Impact Lab TOGO structurent un écosystème d'excellence ouvert aux collaborations stratégiques, académiques et institutionnelles à l'échelle régionale et continentale.")
+    st.markdown("💬 **Propositions de partenariats & alliances :** `impactlabtogo@gmail.com`")
+    st.divider()
+
+    col_w1, col_w2 = st.columns(2)
+    with col_w1:
+        st.markdown("### 🏛️ 1. Entités Publiques & Gouvernementales")
+        st.markdown("""
+        * **Ministères de l'Économie & des Finances :** Assistance technique dans le suivi des cadres macroéconomiques et l'évaluation des plans de développement.
+        * **Banques Centrales (BCEAO / Banques Nationales) :** Partenariats de recherche sur la politique monétaire, la stabilité financière et la modélisation prédictive.
+        * **Instituts Nationaux de la Statistique (INSEED, etc.) :** Appui à la digitalisation des enquêtes et au traitement de grands volumes de données (Big Data socio-économique).
+        """)
+
+        st.markdown("### 🌍 2. Organisations Internationales & Régionales")
+        st.markdown("""
+        * **Communautés Économiques (CEDEAO, UEMOA, Secrétariat de la ZLECAf) :** Études sur l'intégration régionale, les corridors de libre-échange et les barrières non tarifaires.
+        * **Agences de Développement (PNUD, Banque Mondiale, BAD, GIZ) :** Co-signature d'études d'impact, consultances sur-mesure et mise en place de plateformes de données.
+        """)
+
+    with col_w2:
+        st.markdown("### 🎓 3. Universités, Think Tanks & Réseaux de Recherche")
+        st.markdown("""
+        * **Centres de Recherche & Universités d'Afrique et d'ailleurs (ex. AERC) :** Partenariats scientifiques, publications conjointes de working papers et codirection de thèses/mémoires appliqués.
+        * **Think Tanks & Observatoires Économiques :** Synergies pour la rédaction de notes d'orientation politique (*Policy Briefs*) de haut niveau.
+        """)
+
+        st.markdown("### 💼 4. Secteur Privé, Banques & Cabinets de Conseil")
+        st.markdown("""
+        * **Banques Commerciales & Fonds d'Investissement :** Intégration de nos tableaux de bord SaaS pour l'analyse de risque pays et l'allocation d'actifs.
+        * **Cabinets d'Audit & Cabinets Stratégiques :** Partenariats de sous-traitance sur des expertises quantitatives pointues et des enquêtes de terrain complexes.
+        """)
+
+    st.divider()
+    st.subheader("🚀 Vous souhaitez initier une collaboration ?")
+    st.markdown("Nous sommes constamment à la recherche de synergies innovantes. Que vous soyez chercheur, institution, entreprise ou expert indépendant, soumettez votre proposition.")
+    
+    with st.form("partnership_form"):
+        p_name = st.text_input("Nom de l'institution / Organisation / Expert")
+        p_email = st.text_input("E-mail professionnel de contact")
+        p_type = st.selectbox("Nature de la collaboration envisagée", [
+            "Partenariat institutionnel / Recherche", 
+            "Consultance conjointe / Appel d'offres", 
+            "Intégration technologique / SaaS B2B", 
+            "Proposition académique / Publication",
+            "Autre forme de collaboration"
+        ])
+        p_desc = st.text_area("Détails de votre proposition ou projet de collaboration")
+        p_submit = st.form_submit_button("Soumettre la proposition de partenariat")
+        
+        if p_submit:
+            if p_email and p_desc:
+                save_lead(p_email, p_name, f"Partenariat: {p_type}")
+                st.success("✅ Proposition transmise avec succès à la direction d'Impact Lab TOGO. Nous vous contacterons à impactlabtogo@gmail.com sous 48h.")
+            else:
+                st.error("Veuillez remplir au moins l'e-mail et la description du projet.")
+
+# --- ONGLET 6 : CONSEIL STRATÉGIQUE ---
 with tab_conseil:
     st.title("🎯 Conseil Stratégique & Études sur Mesure")
     st.markdown("Vous avez besoin d'une étude d'impact spécifique, d'une modélisation macroéconomique sur-mesure ou d'une analyse de risque pour votre implantation dans la région ?")
