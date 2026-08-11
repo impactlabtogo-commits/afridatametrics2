@@ -1,8 +1,47 @@
 import streamlit as st
+import os
+from datetime import datetime
 
-st.set_page_config(page_title="AfriDataMetrics | Impact Lab TOGO", layout="wide")
+# --- CONFIGURATION DE LA PAGE ---
+st.set_page_config(
+    page_title="AfriDataMetrics | Impact Lab TOGO", 
+    layout="wide",
+    initial_sidebar_state="expanded"
+)
 
-# Données expertes complètes pour les 15 pays de la CEDEAO
+# --- 1. GESTION DES FICHIERS & DONNÉES (Backend) ---
+COUNTER_FILE = 'visitor_count.txt'
+LEADS_FILE = 'leads.csv'
+
+def get_visitor_count():
+    """Lit et incrémente le compteur de visites."""
+    if not os.path.exists(COUNTER_FILE):
+        count = 1
+    else:
+        with open(COUNTER_FILE, 'r') as f:
+            try:
+                count = int(f.read().strip()) + 1
+            except ValueError:
+                count = 1
+    with open(COUNTER_FILE, 'w') as f:
+        f.write(str(count))
+    return count
+
+def save_lead(email, name, category="Général"):
+    """Enregistre un prospect dans le fichier CSV."""
+    file_exists = os.path.exists(LEADS_FILE)
+    with open(LEADS_FILE, 'w', encoding='utf-8') if not file_exists else open(LEADS_FILE, 'a', encoding='utf-8') as f:
+        if not file_exists:
+            f.write('Date,Nom,Email,Categorie\n')
+        timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        f.write(f'"{timestamp}","{name}","{email}","{category}"\n')
+
+# Initialisation du compteur de session
+if 'visitor_counted' not in st.session_state:
+    st.session_state.visitor_count = get_visitor_count()
+    st.session_state.visitor_counted = True
+
+# --- 2. DONNÉES EXPERTES COMPLÈTES (15 PAYS CEDEAO) ---
 cedeao_full_data = {
     "Togo": {
         "Indicateurs": {"Inflation": "2.7%", "PIB": "5.6%", "Solde Budg.": "-3.8%", "Change": "Stable"},
@@ -81,77 +120,170 @@ cedeao_full_data = {
     }
 }
 
-# Barre latérale
-st.sidebar.title("🌍 Centre Régional CEDEAO")
-pays = st.sidebar.selectbox("Sélectionnez un pays :", list(cedeao_full_data.keys()))
+# --- 3. FONCTION AFFICHANT LE TABLEAU DE BORD PRINCIPAL ---
+def run_main_dashboard():
+    # Sélection du pays dans la sidebar ou en haut
+    pays = st.sidebar.selectbox("Sélectionnez un pays :", list(cedeao_full_data.keys()))
 
-st.sidebar.divider()
-st.sidebar.subheader("📄 Rapport Exécutif")
-if st.sidebar.button("🖨️ Imprimer / Exporter en PDF"):
-    st.markdown("<script>window.print();</script>", unsafe_allow_html=True)
+    st.sidebar.divider()
+    st.sidebar.subheader("📄 Rapport Exécutif")
+    if st.sidebar.button("🖨️ Imprimer / Exporter en PDF"):
+        st.markdown("<script>window.print();</script>", unsafe_allow_html=True)
 
-# Rubrique Nous Contacter intégrée proprement dans la sidebar
-st.sidebar.divider()
-st.sidebar.subheader("📬 Nous Contacter")
+    # Design CSS spécifique
+    st.markdown("""
+        <style>
+        .brand-badge { display: inline-block; background-color: #EFF6FF; color: #1D4ED8; padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: 600; margin-bottom: 20px; border: 1px solid #BFDBFE; }
+        @media print { .stSidebar, button { display: none !important; } }
+        </style>
+    """, unsafe_allow_html=True)
+
+    st.markdown(f'<div class="brand-badge">🚀 AfriDataMetrics &bull; Intelligence Économique par Impact Lab TOGO</div>', unsafe_allow_html=True)
+    st.title(f"📊 Analyse : {pays}")
+
+    # Indicateurs macroéconomiques
+    c1, c2, c3, c4 = st.columns(4)
+    c1.metric("Inflation Actuelle", cedeao_full_data[pays]["Indicateurs"]["Inflation"])
+    c2.metric("Croissance PIB", cedeao_full_data[pays]["Indicateurs"]["PIB"])
+    c3.metric("Solde Budgétaire", cedeao_full_data[pays]["Indicateurs"]["Solde Budg."])
+    c4.metric("Tendance Change", cedeao_full_data[pays]["Indicateurs"]["Change"])
+
+    st.divider()
+
+    # Analyse & Recommandations stratégiques
+    st.subheader("💡 Analyse & Recommandations Stratégiques")
+    st.info(cedeao_full_data[pays]["Analyse"])
+
+    # Modélisation prédictive
+    st.subheader("📉 Modélisation Prédictive")
+    st.write("Les projections à moyen terme mettent en évidence une trajectoire de convergence progressive des indices de prix, sous réserve de la poursuite des réformes structurelles et de la stabilité des cours des matières premières sur les marchés internationaux.")
+
+    # Graphique interactif
+    points = cedeao_full_data[pays]["Points"]
+    chart_html = f"""
+    <div style="background-color: #ffffff; padding: 15px; border-radius: 10px; border: 1px solid #E5E7EB;">
+        <canvas id="macroChart" width="400" height="130"></canvas>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+    const ctx = document.getElementById('macroChart').getContext('2d');
+    new Chart(ctx, {{
+        type: 'line',
+        data: {{
+            labels: ['2025-01', '2025-04', '2025-07', '2025-10', '2026-01', '2026-04 (Prév.)', '2026-07 (Prév.)'],
+            datasets: [{{
+                label: 'Inflation (Glissement annuel %)',
+                data: {points},
+                borderColor: '#1D4ED8',
+                backgroundColor: 'rgba(29, 78, 216, 0.06)',
+                borderWidth: 3,
+                fill: true,
+                tension: 0.35
+            }}]
+        }},
+        options: {{ responsive: true }}
+    }});
+    </script>
+    """
+    st.components.v1.html(chart_html, height=350)
+
+
+# --- 4. NAVIGATION & BARRE LATÉRALE DU SAAS ---
+st.sidebar.title("🌍 AfriDataMetrics")
+st.sidebar.caption("Impact Lab TOGO")
+st.sidebar.markdown("---")
+
+menu = st.sidebar.radio(
+    "Navigation Principale", 
+    ["Tableau de Bord (Dashboard)", "Abonnements Pro (SaaS)", "Rapports & Data (DaaS)", "Conseil & Sur-Mesure"]
+)
+
+st.sidebar.markdown("---")
+st.sidebar.subheader("📬 Restez informés")
+st.sidebar.markdown("Recevez nos notes d'analyse exclusives.")
+
+with st.sidebar.form("lead_capture_form"):
+    visitor_name = st.text_input("Votre Nom")
+    visitor_email = st.text_input("Votre E-mail Professionnel *")
+    submitted = st.form_submit_button("S'inscrire à la veille")
+
+    if submitted:
+        if visitor_email and "@" in visitor_email and "." in visitor_email:
+            save_lead(visitor_email, visitor_name if visitor_name else "Anonyme", "Veille Générale")
+            st.success("✅ Inscription validée avec succès.")
+        else:
+            st.error("❌ E-mail invalide.")
+
+st.sidebar.markdown("---")
+st.sidebar.subheader("📬 Contact Institutionnel")
 st.sidebar.markdown(
-    "Pour toute proposition de partenariat ou accès institutionnel :<br>"
+    "Pour toute proposition de partenariat :<br>"
     "📧 **impactlabtogo@gmail.com**",
     unsafe_allow_html=True
 )
 
-# Design
-st.markdown("""
-    <style>
-    .brand-badge { display: inline-block; background-color: #EFF6FF; color: #1D4ED8; padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: 600; margin-bottom: 20px; border: 1px solid #BFDBFE; }
-    @media print { .stSidebar, button { display: none !important; } }
-    </style>
-""", unsafe_allow_html=True)
+st.sidebar.markdown("---")
+st.sidebar.caption(f"📊 Plateforme consultée par **{st.session_state.visitor_count}** visiteurs.")
 
-st.markdown(f'<div class="brand-badge">🚀 AfriDataMetrics &bull; Intelligence Économique par Impact Lab TOGO</div>', unsafe_allow_html=True)
-st.title(f"📊 Analyse : {pays}")
 
-# Indicateurs macroéconomiques
-c1, c2, c3, c4 = st.columns(4)
-c1.metric("Inflation Actuelle", cedeao_full_data[pays]["Indicateurs"]["Inflation"])
-c2.metric("Croissance PIB", cedeao_full_data[pays]["Indicateurs"]["PIB"])
-c3.metric("Solde Budgétaire", cedeao_full_data[pays]["Indicateurs"]["Solde Budg."])
-c4.metric("Tendance Change", cedeao_full_data[pays]["Indicateurs"]["Change"])
+# --- 5. ROUTAGE DES PAGES ---
+if menu == "Tableau de Bord (Dashboard)":
+    run_main_dashboard()
 
-st.divider()
+elif menu == "Abonnements Pro (SaaS)":
+    st.title("💼 Offres d'Abonnement Professionnel (SaaS)")
+    st.markdown("Débloquez la puissance complète de nos modèles économétriques et de nos outils de simulation prédictive pour vos équipes.")
+    
+    col1, col2 = st.columns(2)
+    with col1:
+        st.markdown("### 🚀 Offre Standard Pro")
+        st.markdown("**Pour les analystes et chercheurs indépendants**")
+        st.markdown("- Accès complet aux tableaux de bord historiques\n- Modélisation de base (ARL / VAR)\n- Export des graphiques et données")
+        st.markdown("### **50 000 FCFA / mois**")
+        if st.button("Souscrire à l'Offre Pro"):
+            st.success("Redirection vers le paiement sécurisé... (Contactez impactlabtogo@gmail.com pour finaliser)")
 
-# Analyse & Recommandations stratégiques
-st.subheader("💡 Analyse & Recommandations Stratégiques")
-st.info(cedeao_full_data[pays]["Analyse"])
+    with col2:
+        st.markdown("### 🏛️ Licence Institutionnelle")
+        st.markdown("**Pour les Banques, Fonds & Cabinets**")
+        st.markdown("- Accès multi-utilisateurs illimité\n- Modélisation avancée (System GMM & DSGE)\n- Accès API dédié et rapports automatisés")
+        st.markdown("### **Sur Devis / Annuel**")
+        if st.button("Demander une Licence Institutionnelle"):
+            save_lead("Demande_Licence_Pro", "Institutionnel", "SaaS B2B")
+            st.success("Demande enregistrée. Notre équipe commerciale vous contactera dans les 24h.")
 
-# Modélisation prédictive
-st.subheader("📉 Modélisation Prédictive")
-st.write("Les projections à moyen terme mettent en évidence une trajectoire de convergence progressive des indices de prix, sous réserve de la poursuite des réformes structurelles et de la stabilité des cours des matières premières sur les marchés internationaux.")
+elif menu == "Rapports & Data (DaaS)":
+    st.title("📊 Vente de Données & Rapports (Data-as-a-Service)")
+    st.markdown("Téléchargez des bases de données macroéconomiques nettoyées, structurées et prêtes à l'emploi, ainsi que nos notes d'orientation stratégique sectorielles.")
+    
+    col1, col2 = st.columns(2)
+    with col1:
+        st.markdown("#### 📑 Note d'Orientation : ZLECAf & Corridors")
+        st.markdown("Analyse prospective des mégatendances continentales et des impacts sur les chaînes de valeur.")
+        st.markdown("**Prix : 25 000 FCFA**")
+        if st.button("Commander le Rapport PDF"):
+            st.info("Envoyez un mail à impactlabtogo@gmail.com avec la référence #ZLECAf pour recevoir le lien de téléchargement.")
+            
+    with col2:
+        st.markdown("#### 🗃️ Base de Données Panel CEDEAO (Clean)")
+        st.markdown("Jeu de données Stata/R (1995-2025) prêt pour régressions économétriques.")
+        st.markdown("**Prix : 75 000 FCFA**")
+        if st.button("Commander la Base de Données"):
+            st.info("Envoyez un mail à impactlabtogo@gmail.com pour l'acquisition des tables de données.")
 
-# Graphique interactif
-points = cedeao_full_data[pays]["Points"]
-chart_html = f"""
-<div style="background-color: #ffffff; padding: 15px; border-radius: 10px; border: 1px solid #E5E7EB;">
-    <canvas id="macroChart" width="400" height="130"></canvas>
-</div>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script>
-const ctx = document.getElementById('macroChart').getContext('2d');
-new Chart(ctx, {{
-    type: 'line',
-    data: {{
-        labels: ['2025-01', '2025-04', '2025-07', '2025-10', '2026-01', '2026-04 (Prév.)', '2026-07 (Prév.)'],
-        datasets: [{{
-            label: 'Inflation (Glissement annuel %)',
-            data: {points},
-            borderColor: '#1D4ED8',
-            backgroundColor: 'rgba(29, 78, 216, 0.06)',
-            borderWidth: 3,
-            fill: true,
-            tension: 0.35
-        }}]
-    }},
-    options: {{ responsive: true }}
-}});
-</script>
-"""
-st.components.v1.html(chart_html, height=350)
+elif menu == "Conseil & Sur-Mesure":
+    st.title("🎯 Conseil Stratégique & Études sur Mesure")
+    st.markdown("Vous avez besoin d'une étude d'impact spécifique, d'une modélisation macroéconomique sur-mesure ou d'une analyse de risque pour votre implantation dans la région ?")
+    
+    with st.form("consulting_form"):
+        c_name = st.text_input("Nom de l'organisation / Entreprise")
+        c_email = st.text_input("E-mail de contact")
+        c_project = st.text_area("Décrivez votre besoin ou votre projet d'étude")
+        c_submit = st.form_submit_button("Envoyer la demande de mission")
+        
+        if c_submit:
+            if c_email and c_project:
+                save_lead(c_email, c_name, "Mission Conseil Sur-Mesure")
+                st.success("✅ Votre demande de mission a été transmise à notre équipe d'associés. Nous vous répondrons sous 48h.")
+            else:
+                st.error("Veuillez renseigner au moins l'e-mail et les détails du projet.")
