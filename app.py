@@ -76,10 +76,12 @@ st.markdown("""
             <span style="font-size: 20px; font-weight: bold; color: #1D4ED8;">🌍 AfriDataMetrics</span>
             <span style="font-size: 12px; color: #6B7280; margin-left: 10px;">Impact Lab TOGO &bull; Intelligence Économique CEDEAO</span>
         </div>
+        <div>
+            <span style="font-size: 13px; color: #1D4ED8; font-weight: 600;">📧 Contact : impactlabtogo@gmail.com</span>
+        </div>
     </div>
 """, unsafe_allow_html=True)
 
-# Utilisation d'onglets horizontaux professionnels
 tab_dashboard, tab_pro, tab_daas, tab_conseil = st.tabs([
     "📊 Tableau de Bord (15 Pays)", 
     "💼 Abonnements Pro (SaaS)", 
@@ -87,10 +89,9 @@ tab_dashboard, tab_pro, tab_daas, tab_conseil = st.tabs([
     "🎯 Conseil Stratégique"
 ])
 
-# --- ONGLOT 1 : TABLEAU DE BORD ---
+# --- ONGLET 1 : TABLEAU DE BORD ---
 with tab_dashboard:
     st.markdown("### 🌐 Sélection du Territoire Économique")
-    # Sélecteur de pays bien visible au centre ou en haut de la page
     pays = st.selectbox("Choisissez un pays membre de la CEDEAO :", list(cedeao_full_data.keys()), key="pays_select")
     
     st.markdown("---")
@@ -134,10 +135,12 @@ with tab_dashboard:
     """
     st.components.v1.html(chart_html, height=350)
 
-# --- ONGLOT 2 : ABONNEMENTS PRO ---
+# --- ONGLET 2 : ABONNEMENTS PRO ---
 with tab_pro:
     st.title("💼 Offres d'Abonnement Professionnel (SaaS)")
     st.markdown("Débloquez la puissance complète de nos modèles économétriques et de nos outils de simulation prédictive pour vos équipes.")
+    st.markdown("💬 **Contact direct souscriptions & devis :** `impactlabtogo@gmail.com`")
+    st.divider()
     
     col1, col2 = st.columns(2)
     with col1:
@@ -146,7 +149,7 @@ with tab_pro:
         st.markdown("- Accès complet aux tableaux de bord historiques\n- Modélisation avancée\n- Export des graphiques et données")
         st.markdown("### **50 000 FCFA / mois**")
         if st.button("Souscrire à l'Offre Pro"):
-            st.success("Redirection vers le paiement sécurisé... (Contactez impactlabtogo@gmail.com pour finaliser)")
+            st.success("Redirection... Veuillez confirmer votre souscription en écrivant à impactlabtogo@gmail.com")
 
     with col2:
         st.markdown("### 🏛️ Licence Institutionnelle")
@@ -155,12 +158,14 @@ with tab_pro:
         st.markdown("### **Sur Devis / Annuel**")
         if st.button("Demander une Licence Institutionnelle"):
             save_lead("Demande_Licence_Pro", "Institutionnel", "SaaS B2B")
-            st.success("Demande enregistrée. Notre équipe commerciale vous contactera sous 24h.")
+            st.success("Demande enregistrée. Notre équipe vous contactera rapidement ou écrivez-nous sur impactlabtogo@gmail.com")
 
-# --- ONGLOT 3 : DATA & RAPPORTS ---
+# --- ONGLET 3 : DATA & RAPPORTS ---
 with tab_daas:
     st.title("📊 Vente de Données & Rapports (Data-as-a-Service)")
     st.markdown("Téléchargez des bases de données macroéconomiques nettoyées, structurées et prêtes à l'emploi, ainsi que nos notes d'orientation stratégique sectorielles.")
+    st.markdown("💬 **Commandes directes :** `impactlabtogo@gmail.com`")
+    st.divider()
     
     col1, col2 = st.columns(2)
     with col1:
@@ -177,10 +182,12 @@ with tab_daas:
         if st.button("Commander la Base de Données"):
             st.info("Envoyez un mail à impactlabtogo@gmail.com pour l'acquisition des tables de données.")
 
-# --- ONGLOT 4 : CONSEIL ---
+# --- ONGLET 4 : CONSEIL ---
 with tab_conseil:
     st.title("🎯 Conseil Stratégique & Études sur Mesure")
     st.markdown("Vous avez besoin d'une étude d'impact spécifique, d'une modélisation macroéconomique sur-mesure ou d'une analyse de risque pour votre implantation dans la région ?")
+    st.markdown("💬 **Contact direct mission conseil :** `impactlabtogo@gmail.com`")
+    st.divider()
     
     with st.form("consulting_form"):
         c_name = st.text_input("Nom de l'organisation / Entreprise")
@@ -191,7 +198,7 @@ with tab_conseil:
         if c_submit:
             if c_email and c_project:
                 save_lead(c_email, c_name, "Mission Conseil Sur-Mesure")
-                st.success("✅ Votre demande de mission a été transmise à notre équipe d'associés. Nous vous répondrons sous 48h.")
+                st.success("✅ Votre demande a été transmise. Vous pouvez aussi nous joindre directement à impactlabtogo@gmail.com")
             else:
                 st.error("Veuillez renseigner au moins l'e-mail et les détails du projet.")
 
@@ -215,3 +222,5 @@ with st.sidebar.form("lead_capture_form"):
 
 st.sidebar.markdown("---")
 st.sidebar.caption(f"📊 Trafic plateforme : **{st.session_state.visitor_count}** visites")
+st.sidebar.markdown("---")
+st.sidebar.markdown("**Contact Officiel :**\nimpactlabtogo@gmail.com")
