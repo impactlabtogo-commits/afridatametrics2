@@ -154,8 +154,8 @@ with tab_dashboard:
     st.subheader("📉 Modélisation Prédictive & Trajectoire des Prix")
     points = cedeao_full_data[pays]["Points"]
     
-    # Correction : Suppression du 'f' initial pour éviter l'erreur de syntaxe sur les blocs JS/Chart.js
-    chart_html = f"""
+    # CORRECTION APPORTÉE : Chaîne normale sans 'f' + .format(points) pour éviter le SyntaxError lié aux accolades JavaScript
+    chart_html = """
     <div style="background-color: #ffffff; padding: 15px; border-radius: 10px; border: 1px solid #E5E7EB;">
         <canvas id="macroChart" width="400" height="120"></canvas>
     </div>
@@ -167,18 +167,18 @@ with tab_dashboard:
             labels: ['2025-Q1', '2025-Q2', '2025-Q3', '2025-Q4', '2026-Q1', '2026-Q2 (Prév.)', '2026-Q3 (Prév.)'], 
             datasets: [{{ 
                 label: 'Inflation (Glissement annuel %)', 
-                data: {points}, 
+                data: {0}, 
                 borderColor: '#1D4ED8', 
                 backgroundColor: 'rgba(29, 78, 216, 0.08)',
                 borderWidth: 3,
                 fill: true, 
                 tension: 0.35 
             }}] 
-        },
+        }},
         options: {{ responsive: true }}
     }});
     </script>
-    """
+    """.format(points)
     st.components.v1.html(chart_html, height=350)
 
     # 4. Comparateur Multi-Pays Instantané (Benchmarking côte à côte)
