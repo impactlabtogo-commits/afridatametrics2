@@ -93,14 +93,30 @@ tab_dashboard, tab_pro, tab_daas, tab_formations, tab_work, tab_conseil = st.tab
 
 # --- ONGLET 1 : TABLEAU DE BORD (AVEC AJOUTS PERCUTANTS) ---
 with tab_dashboard:
-    # 1. Fil d'actualité Live (Live Intelligence Feed)
+    # 1. Fil d'actualité Live enrichi (Style "Bloomberg / Statista")
     st.markdown("""
-        <div style="background-color: #EFF6FF; border-left: 4px solid #1D4ED8; padding: 10px 15px; border-radius: 4px; margin-bottom: 20px;">
+        <div style="background-color: #EFF6FF; border-left: 4px solid #1D4ED8; padding: 12px 15px; border-radius: 4px; margin-bottom: 20px;">
             <span style="font-weight: bold; color: #1E40AF; font-size: 13px;">🔴 LIVE INTELLIGENCE FEED :</span> 
-            <span style="font-size: 13px; color: #1E293B;"> Publication de la note de prospective sur l'impact des corridors de libre-échange &bull; Point conjoncturel BCEAO mis à jour.</span>
+            <span style="font-size: 13px; color: #1E293B;">
+                <b>Alerte Climat-Agro :</b> Corrélation critique de 0.78 détectée entre les séquences sèches au Sahel et la volatilité des prix céréaliers &bull; 
+                <b>ZLECAf :</b> L'interconnexion numérique des douanes (DPI) peut sécuriser +20% de recettes fiscales &bull; 
+                <b>BCEAO :</b> Point conjoncturel mis à jour.
+            </span>
         </div>
     """, unsafe_allow_html=True)
 
+    # 2. Section "Insights & Indicateurs Clés de l'Agro-Économie & du Climat" (Nouveau module SaaS)
+    st.markdown("### 🌾 Indicateurs Stratégiques : Climat, Agriculture & Marchés")
+    
+    col_ind1, col_ind2, col_ind3 = st.columns(3)
+    with col_ind1:
+        st.metric("Indice de Risque Climatique (Sahel)", "Élevé (0.78)", delta="+12% vs N-1", delta_color="inverse")
+    with col_ind2:
+        st.metric("Potentiel Filières Agro-industrielles", "1 000 Md $", delta="Horizon 2030")
+    with col_ind3:
+        st.metric("Efficacité Douanière ZLECAf (DPI)", "+20% Recettes", delta="Optimisation SaaS")
+
+    st.markdown("---")
     st.markdown("### 🌐 Sélection du Territoire Économique")
     pays = st.selectbox("Choisissez un pays membre de la CEDEAO :", list(cedeao_full_data.keys()), key="pays_select")
     
@@ -109,7 +125,7 @@ with tab_dashboard:
     
     base_infl = cedeao_full_data[pays]["Indicateurs"]["Inflation"]
     
-    # 2. Module de Simulateur de Chocs (Stress Test Interactif)
+    # 3. Module de Simulateur de Chocs (Stress Test Interactif)
     with st.expander("⚡ Simulateur de Stress Test & Chocs Macroéconomiques (Nouveau)", expanded=False):
         st.markdown("Simulez l'impact instantané de chocs exogènes sur l'inflation du pays sélectionné :")
         col_s1, col_s2, col_s3 = st.columns(3)
@@ -156,14 +172,14 @@ with tab_dashboard:
                 fill: true, 
                 tension: 0.35 
             }}] 
-        }},
+        },
         options: {{ responsive: true }}
     }});
     </script>
     """
     st.components.v1.html(chart_html, height=350)
 
-    # 3. Comparateur Multi-Pays Instantané (Benchmarking côte à côte)
+    # 4. Comparateur Multi-Pays Instantané (Benchmarking côte à côte)
     st.divider()
     st.subheader("⚖️ Comparateur Multi-Pays (Benchmarking Régional)")
     st.markdown("Sélectionnez plusieurs pays pour comparer instantanément leurs indicateurs macroéconomiques :")
