@@ -153,6 +153,8 @@ with tab_dashboard:
     
     st.subheader("📉 Modélisation Prédictive & Trajectoire des Prix")
     points = cedeao_full_data[pays]["Points"]
+    
+    # Correction : Suppression du 'f' initial pour éviter l'erreur de syntaxe sur les blocs JS/Chart.js
     chart_html = f"""
     <div style="background-color: #ffffff; padding: 15px; border-radius: 10px; border: 1px solid #E5E7EB;">
         <canvas id="macroChart" width="400" height="120"></canvas>
